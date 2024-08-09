@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openaiApiKey = process.env.OPENAI_API_KEY;
+const openaiApiKey = process.enxv.local.OPENAI_API_KEY;
 if (!openaiApiKey) {
   throw new Error('API key is not defined');
 }
