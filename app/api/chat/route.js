@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
+import OpenAI from 'openai'; // Import OpenAI library
 
-const openaiApiKey = process.enxv.local.OPENAI_API_KEY;
+const openaiApiKey = process.env.OPENAI_API_KEY;
 if (!openaiApiKey) {
   throw new Error('API key is not defined');
 }
@@ -13,7 +13,7 @@ const openai = new OpenAI({
 const systemPrompt = "Your system prompt goes here";
 
 export async function POST(req) {
-  const data = await req.json();
+  const data = await req.json(); // Parse the JSON body of the incoming request
 
   try {
     const completion = await openai.chat.completions.create({
