@@ -86,7 +86,7 @@ export default function Home() {
         direction={'column'}
         width="500px"
         height="700px"
-        border="1px solid black"
+        border="1px solid grey"
         p={2}
         spacing={3}
       >
@@ -106,14 +106,15 @@ export default function Home() {
               }
             >
               <Box
-                bgcolor={
-                  message.role === 'assistant'
-                    ? 'primary.main'
-                    : 'secondary.main'
-                }
-                color="white"
-                borderRadius={16}
-                p={3}
+                sx={{
+                  bgcolor: message.role === 
+                    'assistant' 
+                    ? '#009688' 
+                    : '#5c6bc0', 
+                  color: 'white',
+                  borderRadius: 16,
+                  p: 3,
+                }}
               >
                 {/* Handling line breaks */}
                 {message.content.split('\n').map((line, i) => (
@@ -132,11 +133,39 @@ export default function Home() {
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             disabled={isLoading}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'darkgrey', 
+                },
+                '&:hover fieldset': {
+                  borderColor: 'darkgrey', 
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#5c6bc0', 
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'grey', 
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#5c6bc0',
+              },
+              '& .MuiInputBase-input': {
+                color: 'grey', 
+              },
+            }}
           />
           <Button
             variant="contained"
             onClick={sendMessage}
             disabled={isLoading}
+            sx={{
+              bgcolor: '#5c6bc0', 
+              '&:hover': {
+                bgcolor: '#3f51b5',
+              },
+            }}
           >
             {isLoading ? 'Sending...' : 'Send'}
           </Button>
