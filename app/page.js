@@ -7,7 +7,7 @@ export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Hi! I'm the Headstarter support assistant. How can I help you today?",
+      content: "Hi! I'm here to help you with tips on how to be more environmentally friendly and preserve water. How can I assist you today?",
     },
   ]);
   const [message, setMessage] = useState('');
@@ -101,23 +101,18 @@ export default function Home() {
             <Box
               key={index}
               display="flex"
-          
               justifyContent={
                 message.role === 'assistant' ? 'flex-start' : 'flex-end'
               }
             >
               <Box
                 sx={{
-                  bgcolor: message.role === 
-                    'assistant' 
-                    ? '#009688' 
-                    : '#5c6bc0', 
+                  bgcolor: message.role === 'assistant' ? '#0D47A1' : '#1565C0',
                   color: 'white',
                   borderRadius: 16,
                   p: 3,
                 }}
               >
-                {/* Handling line breaks */}
                 {message.content.split('\n').map((line, i) => (
                   <p key={i} style={{ margin: 0 }}>{line}</p>
                 ))}
@@ -138,23 +133,23 @@ export default function Home() {
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: 'darkgrey', 
+                  borderColor: '#0D47A1',
                 },
                 '&:hover fieldset': {
-                  borderColor: 'darkgrey', 
+                  borderColor: '#1E88E5',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#5c6bc0', 
+                  borderColor: '#1565C0',
                 },
               },
               '& .MuiInputLabel-root': {
-                color: 'white', 
+                color: 'white',
               },
               '& .MuiInputLabel-root.Mui-focused': {
-                color: '#5c6bc0',
+                color: '#1E88E5',
               },
               '& .MuiInputBase-input': {
-                color: 'white', 
+                color: 'white',
               },
             }}
           />
@@ -163,9 +158,9 @@ export default function Home() {
             onClick={sendMessage}
             disabled={isLoading}
             sx={{
-              bgcolor: '#5c6bc0', 
+              bgcolor: '#0D47A1',
               '&:hover': {
-                bgcolor: '#3f51b5',
+                bgcolor: '#1E88E5',
               },
             }}
           >
