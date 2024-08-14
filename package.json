@@ -16,6 +16,7 @@
     "openai": "^4.55.4",
     "react": "^18",
     "react-dom": "^18",
+    "together": "^0.0.11",
     "together-ai": "^0.6.0-alpha.4"
   },
   "devDependencies": {
