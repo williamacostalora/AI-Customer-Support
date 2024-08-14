@@ -31,8 +31,7 @@ export default function Home() {
     setMessage('');
     setMessages((messages) => [
       ...messages,
-      { role: 'user', content: currentMessage },
-      { role: 'assistant', content: '' },
+      { role: 'user', content: currentMessage }
     ]);
 
     try {
@@ -56,16 +55,28 @@ export default function Home() {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        const text = decoder.decode(value, { stream: true });
-        assistantContent += text;
-        setMessages((messages) => {
-          const updatedMessages = [...messages];
-          updatedMessages[updatedMessages.length - 1] = {
-            role: 'assistant',
-            content: assistantContent,
-          };
-          return updatedMessages;
-        });
+      
+        if (value) {
+          const text = decoder.decode(value, { stream: true });
+          console.log('Received chunk:', text);  // Log each chunk to see if data is coming in
+          assistantContent += text;
+      
+          setMessages((messages) => {
+            if (messages[messages.length - 1]?.role !== 'assistant') {
+              return [...messages, { role: 'assistant', content: assistantContent }];
+            } else {
+              const updatedMessages = [...messages];
+              updatedMessages[updatedMessages.length - 1].content = assistantContent;
+              return updatedMessages;
+            }
+          });
+        }
+      }
+      if (!assistantContent.trim()) {
+        setMessages((messages) => [
+          ...messages,
+          { role: 'assistant', content: "I'm not sure how to respond to that. Can you please try asking something else?" },
+        ]);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -84,6 +95,8 @@ export default function Home() {
       sendMessage();
     }
   };
+
+  
 
   return (
     <Box
