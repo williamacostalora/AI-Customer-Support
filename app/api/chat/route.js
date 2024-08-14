@@ -14,7 +14,7 @@ You are HeadstartBot, an AI assistant for Headstarter. Your job is to help aspir
 8. Maintain a positive, supportive tone to boost users' confidence.
 
 Focus on clear, concise, and helpful responses.
-`;
+`
 
 export async function POST(req) {
   try {
@@ -27,11 +27,17 @@ export async function POST(req) {
 
     const completion = await together.chat.completions.create({
       messages: [{ role: 'system', content: systemPrompt }, ...data],
-      model: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo", // Model as per Together AI example
+      model: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
     });
 
-    console.log("Completion response:", completion); // Log the full response
-    return NextResponse.json({ content: completion.choices[0].message.content }); // Send the response back
+    console.log("Completion response:", completion); // logging  full response
+
+    // extracting and formatting  content
+    const content = completion.choices[0]?.message?.content.trim();
+    const formattedContent = content.replace(/\\n/g, '\n');
+    
+
+    return NextResponse.json({ content: formattedContent });
   } catch (error) {
     console.error("Error in POST /api/chat:", error); // Log the error for debugging
     return NextResponse.json({ error: error.message }, { status: 400 });

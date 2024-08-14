@@ -47,42 +47,19 @@ export default function Home() {
         throw new Error('Network response was not ok');
       }
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
+      const data = await response.json();
+      const assistantContent = data.content;
 
-      let assistantContent = '';
+      setMessages((messages) => [
+        ...messages,
+        { role: 'assistant', content: assistantContent }
+      ]);
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-      
-        if (value) {
-          const text = decoder.decode(value, { stream: true });
-          console.log('Received chunk:', text);  // Log each chunk to see if data is coming in
-          assistantContent += text;
-      
-          setMessages((messages) => {
-            if (messages[messages.length - 1]?.role !== 'assistant') {
-              return [...messages, { role: 'assistant', content: assistantContent }];
-            } else {
-              const updatedMessages = [...messages];
-              updatedMessages[updatedMessages.length - 1].content = assistantContent;
-              return updatedMessages;
-            }
-          });
-        }
-      }
-      if (!assistantContent.trim()) {
-        setMessages((messages) => [
-          ...messages,
-          { role: 'assistant', content: "I'm not sure how to respond to that. Can you please try asking something else?" },
-        ]);
-      }
     } catch (error) {
       console.error('Error:', error);
       setMessages((messages) => [
         ...messages,
-        { role: 'assistant', content: "I'm sorry, but I encountered an error. Please try again later." },
+        { role: 'assistant', content: "I apologize but I encountered an error. Please try again later :)" },
       ]);
     } finally {
       setIsLoading(false);
@@ -95,8 +72,6 @@ export default function Home() {
       sendMessage();
     }
   };
-
-  
 
   return (
     <Box
@@ -140,7 +115,10 @@ export default function Home() {
                 borderRadius={16}
                 p={3}
               >
-                {message.content}
+                {/* Handling line breaks */}
+                {message.content.split('\n').map((line, i) => (
+                  <p key={i} style={{ margin: 0 }}>{line}</p>
+                ))}
               </Box>
             </Box>
           ))}
