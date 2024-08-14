@@ -101,6 +101,7 @@ export default function Home() {
             <Box
               key={index}
               display="flex"
+          
               justifyContent={
                 message.role === 'assistant' ? 'flex-start' : 'flex-end'
               }
@@ -128,6 +129,7 @@ export default function Home() {
         <Stack direction={'row'} spacing={2}>
           <TextField
             label="Message"
+            bgcolor="white"
             fullWidth
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -146,13 +148,13 @@ export default function Home() {
                 },
               },
               '& .MuiInputLabel-root': {
-                color: 'grey', 
+                color: 'white', 
               },
               '& .MuiInputLabel-root.Mui-focused': {
                 color: '#5c6bc0',
               },
               '& .MuiInputBase-input': {
-                color: 'grey', 
+                color: 'white', 
               },
             }}
           />
